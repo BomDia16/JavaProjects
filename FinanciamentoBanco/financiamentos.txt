@@ -1,0 +1,42 @@
+Casa, valor do Imóvel: R$ 150.000,00 | em 6 anos a uma taxa de 2.0% a.a | Total do financiamento: R$ 150.500,00 ou R$ 2.090,28 ao mês. Área construída: 125.0m², área do terreno: 145.0m²
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 1.000.000,00 | em 10 anos a uma taxa de 90.0% a.a | Total do financiamento: R$ 1.084.600,00 ou R$ 9.038,33 ao mês. Área construída: 50.0m², área do terreno: 75.0m²
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 2.000.000,00 | em 20 anos a uma taxa de 12.0% a.a | Total do financiamento: R$ 2.040.000,00 ou R$ 8.500,00 ao mês. Área construída: 75.0m², área do terreno: 100.0m²
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 500.000,00 | em 30 anos a uma taxa de 7.0% a.a | Total do financiamento: R$ 205.293.341,37 ou R$ 570.259,28 ao mês., 4° andar, 1 vagas
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 200.000,00 | em 5 anos a uma taxa de 8.0% a.a | Total do financiamento: R$ 36.497.509,72 ou R$ 608.291,83 ao mês., 8° andar, 2 vagas
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 4.000.000,00 | em 50 anos a uma taxa de 14.0% a.a | Total do financiamento: R$ 4.127.600,00 ou R$ 6.879,33 ao mês., zona Comercial
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 900.000,00 | em 60 anos a uma taxa de 9.0% a.a | Total do financiamento: R$ 924.885,00 ou R$ 1.284,56 ao mês., zona Residencial
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 1,00 | em 40 anos a uma taxa de 99.0% a.a | Total do financiamento: R$ 1,17 ou R$ 0,00 ao mês. Área construída: 125.0m², área do terreno: 150.0m²
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 1.000.000,00 | em 10 anos a uma taxa de 90.0% a.a | Total do financiamento: R$ 1.084.600,00 ou R$ 9.038,33 ao mês. Área construída: 50.0m², área do terreno: 75.0m²
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 2.000.000,00 | em 20 anos a uma taxa de 12.0% a.a | Total do financiamento: R$ 2.040.000,00 ou R$ 8.500,00 ao mês. Área construída: 75.0m², área do terreno: 100.0m²
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 500.000,00 | em 30 anos a uma taxa de 7.0% a.a | Total do financiamento: R$ 205.293.341,37 ou R$ 570.259,28 ao mês., 4° andar, 1 vagas
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 200.000,00 | em 5 anos a uma taxa de 8.0% a.a | Total do financiamento: R$ 36.497.509,72 ou R$ 608.291,83 ao mês., 8° andar, 2 vagas
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 4.000.000,00 | em 50 anos a uma taxa de 14.0% a.a | Total do financiamento: R$ 4.127.600,00 ou R$ 6.879,33 ao mês., zona Comercial
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 900.000,00 | em 60 anos a uma taxa de 9.0% a.a | Total do financiamento: R$ 924.885,00 ou R$ 1.284,56 ao mês., zona Residencial
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 150.000,00 | em 3 anos a uma taxa de 2.0% a.a | Total do financiamento: R$ 92.801.955,09 ou R$ 2.577.832,09 ao mês., 3° andar, 5 vagas
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 1.000.000,00 | em 10 anos a uma taxa de 90.0% a.a | Total do financiamento: R$ 1.084.600,00 ou R$ 9.038,33 ao mês. Área construída: 50.0m², área do terreno: 75.0m²
+----------------------------------------------------------------- 
+Casa, valor do Imóvel: R$ 2.000.000,00 | em 20 anos a uma taxa de 12.0% a.a | Total do financiamento: R$ 2.040.000,00 ou R$ 8.500,00 ao mês. Área construída: 75.0m², área do terreno: 100.0m²
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 500.000,00 | em 30 anos a uma taxa de 7.0% a.a | Total do financiamento: R$ 205.293.341,37 ou R$ 570.259,28 ao mês., 4° andar, 1 vagas
+----------------------------------------------------------------- 
+Apartamento, valor do Imóvel: R$ 200.000,00 | em 5 anos a uma taxa de 8.0% a.a | Total do financiamento: R$ 36.497.509,72 ou R$ 608.291,83 ao mês., 8° andar, 2 vagas
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 4.000.000,00 | em 50 anos a uma taxa de 14.0% a.a | Total do financiamento: R$ 4.127.600,00 ou R$ 6.879,33 ao mês., zona Comercial
+----------------------------------------------------------------- 
+Terreno, valor do Imóvel: R$ 900.000,00 | em 60 anos a uma taxa de 9.0% a.a | Total do financiamento: R$ 924.885,00 ou R$ 1.284,56 ao mês., zona Residencial
+----------------------------------------------------------------- 
