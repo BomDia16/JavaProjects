@@ -27,6 +27,6 @@ public class Livro {
 
     @Override
     public String toString() {
-        return (this.titulo + " de " + this.autor + " " + this.ano_publicacao).toString();
+        return this.titulo + " de " + this.autor + " | " + this.ano_publicacao;
     }
 }
