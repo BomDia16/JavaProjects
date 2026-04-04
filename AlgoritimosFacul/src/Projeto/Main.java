@@ -6,33 +6,16 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        // Livro livro1 = new Livro(1, "Não sobrou nenhum", "Agatha Christie", 1930);
-        // LinkedList<Livro> livros = new LinkedList<>();
-        // livros.add(livro1);
-        // livros.add(new Livro(2, "titulo", "autor", 1900));
 
-        // Queue<Livro> filaLivros = new LinkedList<>();
-        // filaLivros.add(livro1);
-
-        // Stack<Livro> historicoLivros = new Stack<>();
-        // historicoLivros.add(livros.get(1));
-
-        // for (Livro livro : filaLivros) {
-        //     System.out.println(livro.titulo);
-        // }
-
-        // for (Livro livro : historicoLivros) {
-        //     System.out.println(livro.titulo);
-        // }
-
-        Livro livro1 = new Livro(1, "Não sobrou nenhum", "Agatha Christie", 1930);
-        Livro livro2 = new Livro(2, "titulo", "autor", 1900);
-        Livro livro3 = new Livro(3, "Hobbit", "Tolkien", 1970);
+        // Agatha Christie
+        Livro nsn = new Livro(1, "E não sobrou nenhum", "Agatha Christie", 1930);
+        Livro aeo = new Livro(2, "Assassinato no expresso do oriente", "autor", 1934);
 
         // Senhor dos Anéis
         Livro sda1 = new Livro(4, "A Sociedade do Anel", "Tolkien", 1954);
         Livro sda2 = new Livro(5, "As Duas Torres", "Tolkien", 1954);
         Livro sda3 = new Livro(6, "O Retorno do Rei", "Tolkien", 1955);
+        Livro hobbit = new Livro(3, "Hobbit", "Tolkien", 1970);
 
         // Crônicas de Nárnia
         Livro narnia1 = new Livro(7, "O Leão, a Feiticeira e o Guarda-Roupa", "C.S. Lewis", 1950);
@@ -44,12 +27,13 @@ public class Main {
 
         HashMap<Livro, Set<Livro>> recomendacoes = new HashMap<>();
         
-        conectar(recomendacoes, livro1, livro2);
-        conectar(recomendacoes, livro2, livro3);
+        // Conectando Agatha Christie
+        conectar(recomendacoes, aeo, nsn);
 
-        conectar(recomendacoes, livro3, sda1);
+        // Conectando Senhor dos Anéis/ Hobbit
         conectar(recomendacoes, sda1, sda2);
         conectar(recomendacoes, sda2, sda3);
+        conectar(recomendacoes, sda3, hobbit);
 
         // Conectando Nárnia
         conectar(recomendacoes, narnia1, narnia2);
@@ -57,8 +41,9 @@ public class Main {
         // Conectando Harry Potter
         conectar(recomendacoes, hp1, hp2);
         
-        // Opcional: Conectar sagas de fantasia diferentes
+        // Conectando séries de fantasia
         conectar(recomendacoes, sda1, hp1);
+        conectar(recomendacoes, narnia1, sda1);
 
         for (Livro livro : recomendacoes.keySet()) {
             System.out.println("Você leu: " + livro.titulo + ". Você pode gostar de: " + recomendacoes.get(livro).toString());
