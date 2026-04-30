@@ -20,6 +20,10 @@ public class Main {
         HashMap<Livro, Set<Livro>> recomendacoes = criarGrafo();
         Stack<Livro> historico = new Stack<>();
         Queue<Livro> listaEspera = new LinkedList<>();
+        ArvoreBinaria catalogoArvore = new ArvoreBinaria();
+        for (Livro livro : listaLivros()) {
+            catalogoArvore.inserir(livro);
+        }
 
         try (Scanner scanner = new Scanner(System.in)) {
             int escolha;
@@ -32,7 +36,9 @@ public class Main {
                 System.out.println("3 - Ver minha lista de espera");
                 System.out.println("4 - Emprestar livro");
                 System.out.println("5 - Ver minhas recomendações");
-                System.out.println("6 - Sair");
+                System.out.println("6 - Ver livros em ordem alfabética");
+                System.out.println("7 - Buscar livro pelo título");
+                System.out.println("8 - Sair");
                 System.out.print("Bem vindo a biblioteca, o que gostaria de fazer? ");
                 escolha = scanner.nextInt();
                 
@@ -58,13 +64,29 @@ public class Main {
                     }
 
                     case 5 -> consultarRecomendacoes(historico, recomendacoes);
+
+                    case 6 -> catalogoArvore.exibirEmOrdemAlfabetica();
+
+                    case 7 -> {
+                        System.out.print("Digite o título exato do livro: ");
+                        scanner.nextLine();
+                        String tituloBusca = scanner.nextLine();
+                        Livro encontrado = catalogoArvore.buscarPorTitulo(tituloBusca);
                         
-                    case 6 -> {
+                        System.out.println("============================================");
+                        if (encontrado != null) {
+                            System.out.println("Livro encontrado! " + encontrado.getTitulo() + " de " + encontrado.getAutor());
+                        } else {
+                            System.out.println("Livro não encontrado no catálogo.");
+                        }
+                    }
+                        
+                    case 8 -> {
                         escolha = 6;
                         System.out.println("Até a próxima! =)");
                     }
                 }
-            } while (escolha != 6);
+            } while (escolha != 8);
         }
     }
 
