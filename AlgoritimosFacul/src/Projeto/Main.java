@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
@@ -38,7 +39,10 @@ public class Main {
                 System.out.println("5 - Ver minhas recomendações");
                 System.out.println("6 - Ver livros em ordem alfabética");
                 System.out.println("7 - Buscar livro pelo título");
-                System.out.println("8 - Sair");
+                System.out.println("8 - BubbleSort e MergeSort");
+                System.out.println("9 - Buscar por título (DFS e BFS)");
+                System.out.println("10 - Recomendações livros (Dijkstra)");
+                System.out.println("0 - Sair");
                 System.out.print("Bem vindo a biblioteca, o que gostaria de fazer? ");
                 escolha = scanner.nextInt();
                 
@@ -80,13 +84,106 @@ public class Main {
                             System.out.println("Livro não encontrado no catálogo.");
                         }
                     }
-                        
+
                     case 8 -> {
-                        escolha = 6;
+                        int quantidadeDeLivros = 10000;
+        
+                        System.out.println("Gerando " + quantidadeDeLivros + " nomes de livros aleatórios...\n");
+                        String[] livrosAleatorios = GeradorDeNomesLivros.gerarNomes(quantidadeDeLivros);
+
+                        // Avaliando Bubble Sort
+                        System.out.println("Iniciando ordenação com Bubble Sort (Aguarde, pode demorar um pouco)...");
+                        long tempoInicioBubble = System.currentTimeMillis();
+                        BubbleSort.ordenar(livrosAleatorios);
+                        long tempoFimBubble = System.currentTimeMillis();
+
+                        // Avaliando Merge Sort
+                        System.out.println("Iniciando ordenação com Merge Sort...");
+                        long tempoInicioMerge = System.currentTimeMillis();
+                        MergeSort.ordenar(livrosAleatorios);
+                        long tempoFimMerge = System.currentTimeMillis();
+
+                        // Imprimindo Resultados
+                        System.out.println("=============== Avaliação de Eficiência ================");
+                        System.out.println("Tamanho do Array: " + quantidadeDeLivros + " itens\n");
+                        
+                        System.out.println("-> BUBBLE SORT:");
+                        System.out.println("Comparações realizadas: " + BubbleSort.comparacoes);
+                        System.out.println("Tempo de execução: " + (tempoFimBubble - tempoInicioBubble) + " milissegundos\n");
+
+                        System.out.println("-> MERGE SORT:");
+                        System.out.println("Comparações realizadas: " + MergeSort.comparacoes);
+                        System.out.println("Tempo de execução: " + (tempoFimMerge - tempoInicioMerge) + " milissegundos");
+                        System.out.println("========================================================");
+                    }
+
+                    case 9 -> {
+                        System.out.print("Digite o título exato do livro que deseja buscar: ");
+                        scanner.nextLine();
+                        String tituloDesejado = scanner.nextLine();
+
+                        System.out.println("\n============================================");
+                        System.out.println("INICIANDO BUSCA EM PROFUNDIDADE (DFS):");
+                        Livro resultadoDFS = DFS.buscar(catalogoArvore.raiz, tituloDesejado);
+                        
+                        System.out.println("\n--------------------------------------------");
+                        System.out.println("INICIANDO BUSCA EM LARGURA (BFS):");
+                        Livro resultadoBFS = BFS.buscar(catalogoArvore.raiz, tituloDesejado);
+                        
+                        System.out.println("============================================");
+                        if (resultadoDFS == null && resultadoBFS == null) {
+                            System.out.println("RESULTADO: Livro não encontrado no catálogo.");
+                        }
+                    }
+
+                    case 10 -> {
+                        System.out.println("============================================");
+
+                        if (historico.isEmpty()) {
+                            System.out.println("Você ainda não emprestou nenhum livro para ver as recomendações!");
+                            return; // Encerra a execução do método aqui
+                        }
+
+                        for (Livro livroLido : historico) {
+                            System.out.println("\nVocê leu: " + livroLido.getTitulo());
+
+                            // Roda o Dijkstra para encontrar as distâncias a partir do livro lido
+                            Map<Livro, Integer> distancias = Dijkstra.djikstraSimples(recomendacoes, livroLido);
+
+                            // Variáveis para saber se encontramos recomendações e controlar a impressão
+                            boolean imprimiuCabecalhoDist1 = false;
+                            boolean imprimiuCabecalhoDist2 = false;
+
+                            // Busca os de Distância 1
+                            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
+                                if (entrada.getValue() == 1) {
+                                    if (!imprimiuCabecalhoDist1) {
+                                        System.out.println("Você vai gostar de:");
+                                        imprimiuCabecalhoDist1 = true;
+                                    }
+                                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
+                                }
+                            }
+
+                            // Busca os de Distância 2
+                            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
+                                if (entrada.getValue() == 2) {
+                                    if (!imprimiuCabecalhoDist2) {
+                                        System.out.println("Você talvez goste de:");
+                                        imprimiuCabecalhoDist2 = true;
+                                    }
+                                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
+                                }
+                            }
+                        }
+                    }
+                        
+                    case 0 -> {
+                        escolha = 0;
                         System.out.println("Até a próxima! =)");
                     }
                 }
-            } while (escolha != 8);
+            } while (escolha != 0);
         }
     }
 
