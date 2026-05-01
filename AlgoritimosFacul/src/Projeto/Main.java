@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
 
-
 // Eu fiz uma lógica de empréstimo que o livro escolhido tem uma chance de estar disponível
 // Caso esteja disponível, o livro será adicionado ao histórico, onde os livros mais recentes aparecerão primeiro
 // Caso não esteja disponível, o livro entrará na sua lista de espera, onde ele irá por último na fila
@@ -18,10 +17,13 @@ public class Main {
     public static void main(String[] args) {
 
         // Instanciando o grafo das recomendações, stack do histórico e fila da lista de espera
+        // Para a AS2 também foi adicionada a Árvore Binária
         HashMap<Livro, Set<Livro>> recomendacoes = criarGrafo();
         Stack<Livro> historico = new Stack<>();
         Queue<Livro> listaEspera = new LinkedList<>();
         ArvoreBinaria catalogoArvore = new ArvoreBinaria();
+        
+        // Inserindo os livros na Árvore Binária
         for (Livro livro : listaLivros()) {
             catalogoArvore.inserir(livro);
         }
@@ -41,7 +43,7 @@ public class Main {
                 System.out.println("7 - Buscar livro pelo título");
                 System.out.println("8 - BubbleSort e MergeSort");
                 System.out.println("9 - Buscar por título (DFS e BFS)");
-                System.out.println("10 - Recomendações livros (Dijkstra)");
+                System.out.println("10 - Recomendações avançadas (Dijkstra)");
                 System.out.println("0 - Sair");
                 System.out.print("Bem vindo a biblioteca, o que gostaria de fazer? ");
                 escolha = scanner.nextInt();
@@ -49,199 +51,181 @@ public class Main {
                 // Opções
                 switch (escolha) {
                     case 1 -> consultarLivros();
-
                     case 2 -> consultarHistorico(historico);
-
                     case 3 -> consultarListaEspera(listaEspera);
-
-                    case 4 -> {
-                        System.out.print("ID do livro que você gostaria de emprestar: ");
-                        int emprestar = scanner.nextInt() - 1;
-                        
-                        if ((int)(Math.random() * (1 - 0 + 1) + 0) == 1) {
-                            System.out.println("Esse livro já foi emprestado, livro adicionado à lista de espera!");
-                            listaEspera.add(listaLivros().get(emprestar));
-                        } else {
-                            historico.add(listaLivros().get(emprestar));
-                            System.out.println("Livro emprestado com sucesso!");
-                        }
-                    }
-
+                    case 4 -> emprestarLivro(scanner, historico, listaEspera);
                     case 5 -> consultarRecomendacoes(historico, recomendacoes);
-
                     case 6 -> catalogoArvore.exibirEmOrdemAlfabetica();
-
-                    case 7 -> {
-                        System.out.print("Digite o título exato do livro: ");
-                        scanner.nextLine();
-                        String tituloBusca = scanner.nextLine();
-                        Livro encontrado = catalogoArvore.buscarPorTitulo(tituloBusca);
-                        
-                        System.out.println("============================================");
-                        if (encontrado != null) {
-                            System.out.println("Livro encontrado! " + encontrado.getTitulo() + " de " + encontrado.getAutor());
-                        } else {
-                            System.out.println("Livro não encontrado no catálogo.");
-                        }
-                    }
-
-                    case 8 -> {
-                        int quantidadeDeLivros = 10000;
-        
-                        System.out.println("Gerando " + quantidadeDeLivros + " nomes de livros aleatórios...\n");
-                        String[] livrosAleatorios = GeradorDeNomesLivros.gerarNomes(quantidadeDeLivros);
-
-                        // Avaliando Bubble Sort
-                        System.out.println("Iniciando ordenação com Bubble Sort (Aguarde, pode demorar um pouco)...");
-                        long tempoInicioBubble = System.currentTimeMillis();
-                        BubbleSort.ordenar(livrosAleatorios);
-                        long tempoFimBubble = System.currentTimeMillis();
-
-                        // Avaliando Merge Sort
-                        System.out.println("Iniciando ordenação com Merge Sort...");
-                        long tempoInicioMerge = System.currentTimeMillis();
-                        MergeSort.ordenar(livrosAleatorios);
-                        long tempoFimMerge = System.currentTimeMillis();
-
-                        // Imprimindo Resultados
-                        System.out.println("=============== Avaliação de Eficiência ================");
-                        System.out.println("Tamanho do Array: " + quantidadeDeLivros + " itens\n");
-                        
-                        System.out.println("-> BUBBLE SORT:");
-                        System.out.println("Comparações realizadas: " + BubbleSort.comparacoes);
-                        System.out.println("Tempo de execução: " + (tempoFimBubble - tempoInicioBubble) + " milissegundos\n");
-
-                        System.out.println("-> MERGE SORT:");
-                        System.out.println("Comparações realizadas: " + MergeSort.comparacoes);
-                        System.out.println("Tempo de execução: " + (tempoFimMerge - tempoInicioMerge) + " milissegundos");
-                        System.out.println("========================================================");
-                    }
-
-                    case 9 -> {
-                        System.out.print("Digite o título exato do livro que deseja buscar: ");
-                        scanner.nextLine();
-                        String tituloDesejado = scanner.nextLine();
-
-                        System.out.println("\n============================================");
-                        System.out.println("INICIANDO BUSCA EM PROFUNDIDADE (DFS):");
-                        Livro resultadoDFS = DFS.buscar(catalogoArvore.raiz, tituloDesejado);
-                        
-                        System.out.println("\n--------------------------------------------");
-                        System.out.println("INICIANDO BUSCA EM LARGURA (BFS):");
-                        Livro resultadoBFS = BFS.buscar(catalogoArvore.raiz, tituloDesejado);
-                        
-                        System.out.println("============================================");
-                        if (resultadoDFS == null && resultadoBFS == null) {
-                            System.out.println("RESULTADO: Livro não encontrado no catálogo.");
-                        }
-                    }
-
-                    case 10 -> {
-                        System.out.println("============================================");
-
-                        if (historico.isEmpty()) {
-                            System.out.println("Você ainda não emprestou nenhum livro para ver as recomendações!");
-                            return; // Encerra a execução do método aqui
-                        }
-
-                        for (Livro livroLido : historico) {
-                            System.out.println("\nVocê leu: " + livroLido.getTitulo());
-
-                            // Roda o Dijkstra para encontrar as distâncias a partir do livro lido
-                            Map<Livro, Integer> distancias = Dijkstra.djikstraSimples(recomendacoes, livroLido);
-
-                            // Variáveis para saber se encontramos recomendações e controlar a impressão
-                            boolean imprimiuCabecalhoDist1 = false;
-                            boolean imprimiuCabecalhoDist2 = false;
-
-                            // Busca os de Distância 1
-                            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
-                                if (entrada.getValue() == 1) {
-                                    if (!imprimiuCabecalhoDist1) {
-                                        System.out.println("Você vai gostar de:");
-                                        imprimiuCabecalhoDist1 = true;
-                                    }
-                                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
-                                }
-                            }
-
-                            // Busca os de Distância 2
-                            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
-                                if (entrada.getValue() == 2) {
-                                    if (!imprimiuCabecalhoDist2) {
-                                        System.out.println("Você talvez goste de:");
-                                        imprimiuCabecalhoDist2 = true;
-                                    }
-                                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
-                                }
-                            }
-                        }
-                    }
-                        
-                    case 0 -> {
-                        escolha = 0;
-                        System.out.println("Até a próxima! =)");
-                    }
+                    case 7 -> buscarLivroPorTitulo(scanner, catalogoArvore);
+                    case 8 -> avaliarOrdenacao();
+                    case 9 -> buscarLivroDFS_BFS(scanner, catalogoArvore);
+                    case 10 -> consultarRecomendacoesAvancadas(historico, recomendacoes);
+                    case 0 -> System.out.println("Até a próxima! =)");
+                    default -> System.out.println("Opção inválida, tente novamente.");
                 }
             } while (escolha != 0);
         }
     }
 
-    // Consultar todos os livros disponíveis
+    // Opção 1: Consultar todos os livros disponíveis
     public static void consultarLivros() {
         ArrayList<Livro> livros = listaLivros();
-        
         System.out.println("============================================");
-
         for (Livro livro : livros) {
             System.out.println(livro.getId() + " - " + livro.getTitulo() + " de " + livro.getAutor() + " | " + livro.getAno_publicacao());
         }
     }
 
-    // Consultar histórico do usuário
+    // Opção 2: Consultar histórico do usuário
     public static void consultarHistorico(Stack<Livro> historico) {
-
         System.out.println("============================================");
-
         for (int i = historico.size() - 1; i >= 0; i--) {
             Livro livro = historico.get(i);
             System.out.println("- " + livro.getTitulo() + " de " + livro.getAutor() + " | " + livro.getAno_publicacao());
         }
-
         if (historico.isEmpty()) {
             System.out.println("Você ainda não emprestou nenhum livro!");
         }
     }
 
-    // Consultar lista de espera do usuário
+    // Opção 3: Consultar lista de espera do usuário
     public static void consultarListaEspera(Queue<Livro> listaEspera) {
-
         System.out.println("============================================");
-
         for (Livro livro : listaEspera) {
             System.out.println("- " + livro.getTitulo() + " de " + livro.getAutor() + " | " + livro.getAno_publicacao());
         }
-
         if (listaEspera.isEmpty()) {
             System.out.println("Você ainda não tem nenhum livro na lista de espera!");
         }
     }
 
-    // Consultar recomendações do usuário
+    // Opção 4: Emprestar um livro (se o livro não estiver disponível ele é adicionado na lista de espera)
+    public static void emprestarLivro(Scanner scanner, Stack<Livro> historico, Queue<Livro> listaEspera) {
+        System.out.print("ID do livro que você gostaria de emprestar: ");
+        int emprestar = scanner.nextInt() - 1;
+        
+        if ((int)(Math.random() * (1 - 0 + 1) + 0) == 1) {
+            System.out.println("Esse livro já foi emprestado, livro adicionado à lista de espera!");
+            listaEspera.add(listaLivros().get(emprestar));
+        } else {
+            historico.add(listaLivros().get(emprestar));
+            System.out.println("Livro emprestado com sucesso!");
+        }
+    }
+
+    // Opção 5: Consultar recomendações do usuário
     public static void consultarRecomendacoes(Stack<Livro> historico, HashMap<Livro, Set<Livro>> recomendacoes) {
-
         System.out.println("============================================");
-
         for (Livro livro : historico) {
             System.out.println("Você leu: " + livro.getTitulo() + ". Você pode gostar de:");
-
             for (Livro livro_recomendado : recomendacoes.get(livro)) {
                 System.out.println("   - " + livro_recomendado.getTitulo() + " de " + livro_recomendado.getAutor());
             }
         }
+        if (historico.isEmpty()) {
+            System.out.println("Você ainda não emprestou nenhum livro para ver as recomendações!");
+        }
+    }
+
+    // Opção 7: Buscar livro pelo título exato na Árvore
+    public static void buscarLivroPorTitulo(Scanner scanner, ArvoreBinaria catalogoArvore) {
+        System.out.print("Digite o título exato do livro: ");
+        scanner.nextLine(); // Limpa o buffer
+        String tituloBusca = scanner.nextLine();
+        Livro encontrado = catalogoArvore.buscarPorTitulo(tituloBusca);
+        
+        System.out.println("============================================");
+        if (encontrado != null) {
+            System.out.println("Livro encontrado! " + encontrado.getTitulo() + " de " + encontrado.getAutor());
+        } else {
+            System.out.println("Livro não encontrado no catálogo.");
+        }
+    }
+
+    // Opção 8: Avaliação de desempenho de algoritmos de ordenação (BubbleSort e MergeSort)
+    public static void avaliarOrdenacao() {
+        int quantidadeDeLivros = 10000;
+        System.out.println("Gerando " + quantidadeDeLivros + " nomes de livros aleatórios...\n");
+        String[] livrosAleatorios = GeradorDeNomesLivros.gerarNomes(quantidadeDeLivros);
+
+        System.out.println("Iniciando ordenação com Bubble Sort (Aguarde, pode demorar um pouco)...");
+        long tempoInicioBubble = System.currentTimeMillis();
+        BubbleSort.ordenar(livrosAleatorios);
+        long tempoFimBubble = System.currentTimeMillis();
+
+        System.out.println("Iniciando ordenação com Merge Sort...");
+        long tempoInicioMerge = System.currentTimeMillis();
+        MergeSort.ordenar(livrosAleatorios);
+        long tempoFimMerge = System.currentTimeMillis();
+
+        System.out.println("=============== Avaliação de Eficiência ================");
+        System.out.println("Tamanho do Array: " + quantidadeDeLivros + " itens\n");
+        
+        System.out.println("-> BUBBLE SORT:");
+        System.out.println("Comparações realizadas: " + BubbleSort.comparacoes);
+        System.out.println("Tempo de execução: " + (tempoFimBubble - tempoInicioBubble) + " milissegundos\n");
+
+        System.out.println("-> MERGE SORT:");
+        System.out.println("Comparações realizadas: " + MergeSort.comparacoes);
+        System.out.println("Tempo de execução: " + (tempoFimMerge - tempoInicioMerge) + " milissegundos");
+        System.out.println("========================================================");
+    }
+
+    // Opção 9: Comparação de buscas DFS e BFS
+    public static void buscarLivroDFS_BFS(Scanner scanner, ArvoreBinaria catalogoArvore) {
+        System.out.print("Digite o título exato do livro que deseja buscar: ");
+        scanner.nextLine(); // Limpa o buffer
+        String tituloDesejado = scanner.nextLine();
+
+        System.out.println("\n============================================");
+        System.out.println("INICIANDO BUSCA EM PROFUNDIDADE (DFS):");
+        Livro resultadoDFS = DFS.buscar(catalogoArvore.raiz, tituloDesejado);
+        
+        System.out.println("\n--------------------------------------------");
+        System.out.println("INICIANDO BUSCA EM LARGURA (BFS):");
+        Livro resultadoBFS = BFS.buscar(catalogoArvore.raiz, tituloDesejado);
+        
+        System.out.println("============================================");
+        if (resultadoDFS == null && resultadoBFS == null) {
+            System.out.println("RESULTADO: Livro não encontrado no catálogo.");
+        }
+    }
+
+    // Opção 10: Recomendações avançadas com Dijkstra
+    public static void consultarRecomendacoesAvancadas(Stack<Livro> historico, HashMap<Livro, Set<Livro>> recomendacoes) {
+        System.out.println("============================================");
 
         if (historico.isEmpty()) {
             System.out.println("Você ainda não emprestou nenhum livro para ver as recomendações!");
+            return;
+        }
+
+        for (Livro livroLido : historico) {
+            System.out.println("\nVocê leu: " + livroLido.getTitulo());
+            Map<Livro, Integer> distancias = Dijkstra.djikstraSimples(recomendacoes, livroLido);
+
+            boolean imprimiuCabecalhoDist1 = false;
+            boolean imprimiuCabecalhoDist2 = false;
+
+            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
+                if (entrada.getValue() == 1) {
+                    if (!imprimiuCabecalhoDist1) {
+                        System.out.println("Você vai gostar de:");
+                        imprimiuCabecalhoDist1 = true;
+                    }
+                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
+                }
+            }
+
+            for (Map.Entry<Livro, Integer> entrada : distancias.entrySet()) {
+                if (entrada.getValue() == 2) {
+                    if (!imprimiuCabecalhoDist2) {
+                        System.out.println("Você talvez goste de:");
+                        imprimiuCabecalhoDist2 = true;
+                    }
+                    System.out.println("   - " + entrada.getKey().getTitulo() + " de " + entrada.getKey().getAutor());
+                }
+            }
         }
     }
 
@@ -249,21 +233,14 @@ public class Main {
     public static ArrayList<Livro> listaLivros() {
         ArrayList<Livro> livros = new ArrayList<>();
 
-        // Agatha Christie
         Livro nsn = new Livro(1, "E não sobrou nenhum", "Agatha Christie", 1930);
         Livro aeo = new Livro(2, "Assassinato no expresso do oriente", "autor", 1934);
-
-        // Senhor dos Anéis
         Livro sda1 = new Livro(4, "A Sociedade do Anel", "Tolkien", 1954);
         Livro sda2 = new Livro(5, "As Duas Torres", "Tolkien", 1954);
         Livro sda3 = new Livro(6, "O Retorno do Rei", "Tolkien", 1955);
         Livro hobbit = new Livro(3, "Hobbit", "Tolkien", 1970);
-
-        // Crônicas de Nárnia
         Livro narnia1 = new Livro(7, "O Leão, a Feiticeira e o Guarda-Roupa", "C.S. Lewis", 1950);
         Livro narnia2 = new Livro(8, "O Príncipe Caspian", "C.S. Lewis", 1951);
-
-        // Harry Potter
         Livro hp1 = new Livro(9, "Harry Potter e a Pedra Filosofal", "J.K. Rowling", 1997);
         Livro hp2 = new Livro(10, "Harry Potter e a Câmara Secreta", "J.K. Rowling", 1998);
 
@@ -283,34 +260,22 @@ public class Main {
 
     // Função para criar o grafo com as conexões entre os livros
     public static HashMap<Livro, Set<Livro>> criarGrafo() {
-
         HashMap<Livro, Set<Livro>> recomendacoes = new HashMap<>();
         ArrayList<Livro> livros = listaLivros();
         
-        // Conectando Agatha Christie
         conectar(recomendacoes, livros.get(1), livros.get(0));
-
-        // Conectando Senhor dos Anéis/ Hobbit
         conectar(recomendacoes, livros.get(2), livros.get(3));
         conectar(recomendacoes, livros.get(3), livros.get(4));
         conectar(recomendacoes, livros.get(2), livros.get(4));
         conectar(recomendacoes, livros.get(4), livros.get(5));
         conectar(recomendacoes, livros.get(2), livros.get(5));
         conectar(recomendacoes, livros.get(3), livros.get(5));
-
-        // Conectando Nárnia
         conectar(recomendacoes, livros.get(6), livros.get(7));
-
-        // Conectando Harry Potter
         conectar(recomendacoes, livros.get(8), livros.get(9));
-        
-        // Conectando séries de fantasia
         conectar(recomendacoes, livros.get(2), livros.get(8));
         conectar(recomendacoes, livros.get(2), livros.get(9));
         conectar(recomendacoes, livros.get(6), livros.get(2));
         conectar(recomendacoes, livros.get(7), livros.get(2));
-
-        // Conectando séries "cult"
         conectar(recomendacoes, livros.get(1), livros.get(2));
         conectar(recomendacoes, livros.get(0), livros.get(3));
 

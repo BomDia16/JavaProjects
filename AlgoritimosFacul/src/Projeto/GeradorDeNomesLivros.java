@@ -14,7 +14,7 @@ public class GeradorDeNomesLivros {
             nomesDeLivros[i] = gerarNomeAleatorio(random);
         }
 
-        // Apenas para fins de teste mostraremos os 10 primeiros nomes
+        // Apenas para fins de teste mostrarei os 10 primeiros nomes
         for (int i = 0; i < 10; i++) {
             System.out.println(nomesDeLivros[i]);
         }
@@ -22,6 +22,7 @@ public class GeradorDeNomesLivros {
         return nomesDeLivros;
     }
 
+    // Gerar nomes de livros completamente aleatórios
     private static String gerarNomeAleatorio(Random random) {
         int tamanhoDoNome = random.nextInt(TAMANHO_MAXIMO_DO_NOME) + 1;
         StringBuilder sb = new StringBuilder(tamanhoDoNome);

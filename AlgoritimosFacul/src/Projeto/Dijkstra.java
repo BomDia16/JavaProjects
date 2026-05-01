@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+// Classe para o algorítimo Dijkstra
+// Ele foi utilizado para uma nova lógica de recomendações
+// Os livros que tem distância 1 do título lido pelo usuário são considerados como alta probabilidade da pessoa gostar
+// Se o livro tiver 2 de distância, ele será mostrado como um livro que a pessoa talvez gostar
 public class Dijkstra {
     public static Map<Livro, Integer> djikstraSimples(HashMap<Livro, Set<Livro>> grafo, Livro origem) {
 
@@ -14,7 +18,8 @@ public class Dijkstra {
 
         Queue<Livro> fila = new LinkedList<>();
 
-        distancias.put(origem, 0); // como não temos pesos entre os nós, o peso padrão é 0
+        // Como não temos pesos entre os nós, o peso padrão é 0
+        distancias.put(origem, 0);
 
         fila.add(origem);
 
@@ -42,6 +47,7 @@ public class Dijkstra {
 
         }
 
+        // Retorna as distância dos livros até o livro de origem
         return distancias;
 
     }
